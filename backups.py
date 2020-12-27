@@ -4,7 +4,6 @@ import time
 from io import BytesIO
 from typing import Optional
 
-# SQL
 import emilia.modules.sql.antiflood_sql as antifloodsql
 import emilia.modules.sql.blacklist_sql as blacklistsql
 import emilia.modules.sql.blsticker_sql as blackliststksql
@@ -12,16 +11,22 @@ import emilia.modules.sql.locks_sql as locksql
 import emilia.modules.sql.notes_sql as sql
 import emilia.modules.sql.rules_sql as rulessql
 import emilia.modules.sql.welcome_sql as welcsql
-from emilia import (LOGGER, OWNER_ID, SUDO_USERS, TEMPORARY_DATA, dispatcher,
-                    spamcheck)
+from emilia import dispatcher
+from emilia import LOGGER
+from emilia import OWNER_ID
+from emilia import spamcheck
+from emilia import SUDO_USERS
+from emilia import TEMPORARY_DATA
 from emilia.__main__ import DATA_IMPORT
 from emilia.modules.connection import connected
 from emilia.modules.helper_funcs.alternate import send_message
 from emilia.modules.helper_funcs.chat_status import user_admin
-from emilia.modules.helper_funcs.misc import build_keyboard, revert_buttons
-from emilia.modules.helper_funcs.msg_types import Types, get_note_type
-from emilia.modules.helper_funcs.string_handling import (
-    button_markdown_parser, make_time)
+from emilia.modules.helper_funcs.misc import build_keyboard
+from emilia.modules.helper_funcs.misc import revert_buttons
+from emilia.modules.helper_funcs.msg_types import get_note_type
+from emilia.modules.helper_funcs.msg_types import Types
+from emilia.modules.helper_funcs.string_handling import button_markdown_parser
+from emilia.modules.helper_funcs.string_handling import make_time
 from emilia.modules.languages import tl
 from emilia.modules.locks import LOCK_TYPES
 from emilia.modules.rules import get_rules
@@ -31,10 +36,18 @@ from emilia.modules.sql import languages_sql as langsql
 from emilia.modules.sql import notes_sql as notesql
 from emilia.modules.sql import reporting_sql as reportsql
 from emilia.modules.sql import warns_sql as warnssql
-from telegram import (MAX_MESSAGE_LENGTH, Bot, Chat, InlineKeyboardMarkup,
-                      Message, ParseMode, Update)
+from telegram import Bot
+from telegram import Chat
+from telegram import InlineKeyboardMarkup
+from telegram import MAX_MESSAGE_LENGTH
+from telegram import Message
+from telegram import ParseMode
+from telegram import Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters, run_async
+from telegram.ext import CommandHandler
+from telegram.ext import Filters
+from telegram.ext import run_async
+# SQL
 
 
 @run_async
