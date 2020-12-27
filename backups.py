@@ -1,46 +1,40 @@
 import json
-import time
 import os
+import time
 from io import BytesIO
 from typing import Optional
-
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram import Message, Chat, Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, Filters
-
-import emilia.modules.sql.notes_sql as sql
-from emilia import dispatcher, LOGGER, OWNER_ID, SUDO_USERS, spamcheck, TEMPORARY_DATA
-from emilia.__main__ import DATA_IMPORT
-from emilia.modules.helper_funcs.chat_status import user_admin
-from emilia.modules.helper_funcs.misc import build_keyboard, revert_buttons
-from emilia.modules.helper_funcs.msg_types import get_note_type
-from emilia.modules.rules import get_rules
-from emilia.modules.helper_funcs.string_handling import (
-    button_markdown_parser,
-    make_time,
-)
 
 # SQL
 import emilia.modules.sql.antiflood_sql as antifloodsql
 import emilia.modules.sql.blacklist_sql as blacklistsql
 import emilia.modules.sql.blsticker_sql as blackliststksql
-from emilia.modules.sql import disable_sql as disabledsql
-from emilia.modules.sql import cust_filters_sql as filtersql
-from emilia.modules.sql import languages_sql as langsql
 import emilia.modules.sql.locks_sql as locksql
+import emilia.modules.sql.notes_sql as sql
+import emilia.modules.sql.rules_sql as rulessql
+import emilia.modules.sql.welcome_sql as welcsql
+from emilia import (LOGGER, OWNER_ID, SUDO_USERS, TEMPORARY_DATA, dispatcher,
+                    spamcheck)
+from emilia.__main__ import DATA_IMPORT
+from emilia.modules.connection import connected
+from emilia.modules.helper_funcs.alternate import send_message
+from emilia.modules.helper_funcs.chat_status import user_admin
+from emilia.modules.helper_funcs.misc import build_keyboard, revert_buttons
+from emilia.modules.helper_funcs.msg_types import Types, get_note_type
+from emilia.modules.helper_funcs.string_handling import (
+    button_markdown_parser, make_time)
+from emilia.modules.languages import tl
 from emilia.modules.locks import LOCK_TYPES
+from emilia.modules.rules import get_rules
+from emilia.modules.sql import cust_filters_sql as filtersql
+from emilia.modules.sql import disable_sql as disabledsql
+from emilia.modules.sql import languages_sql as langsql
 from emilia.modules.sql import notes_sql as notesql
 from emilia.modules.sql import reporting_sql as reportsql
-import emilia.modules.sql.rules_sql as rulessql
 from emilia.modules.sql import warns_sql as warnssql
-import emilia.modules.sql.welcome_sql as welcsql
-
-from emilia.modules.connection import connected
-
-from emilia.modules.helper_funcs.msg_types import Types
-from emilia.modules.languages import tl
-from emilia.modules.helper_funcs.alternate import send_message
+from telegram import (MAX_MESSAGE_LENGTH, Bot, Chat, InlineKeyboardMarkup,
+                      Message, ParseMode, Update)
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters, run_async
 
 
 @run_async
